@@ -20,11 +20,26 @@ const patrickHand = Patrick_Hand({
   subsets: ["latin"],
 });
 
+const TITLE = "ShipDaily — Ship daily, together.";
+const DESCRIPTION =
+  "A community where early-stage founders, indie hackers and SaaS builders back each other: launch promotion, honest feedback, guidance and shared resources.";
+
 export const metadata: Metadata = {
-  title: "ShipDaily — Ship daily, together.",
-  description:
-    "A community for early founders to ship products, get feedback, find resources and grow together.",
+  title: TITLE,
+  description: DESCRIPTION,
   metadataBase: new URL("https://shipdaily.ai"),
+  openGraph: {
+    type: "website",
+    url: "/",
+    siteName: "ShipDaily.ai",
+    title: TITLE,
+    description: DESCRIPTION,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: TITLE,
+    description: DESCRIPTION,
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
