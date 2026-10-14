@@ -118,15 +118,6 @@ body {
   mask-image: linear-gradient(90deg, transparent 0 2px, black 2px calc(100% - 2px), transparent calc(100% - 2px));
 }
 
-@keyframes float {
-  0%, 100% { transform: translateY(0) rotate(var(--tilt, 0deg)); }
-  50% { transform: translateY(-6px) rotate(var(--tilt, 0deg)); }
-}
-
-.float {
-  animation: float 6s ease-in-out infinite;
-}
-
 @keyframes draw {
   from { clip-path: inset(0 100% 0 0); }
   to { clip-path: inset(0 0 0 0); }
@@ -139,6 +130,6 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .float, .draw { animation: none; }
+  .draw { animation: none; }
   .note, .note:hover { transition: none; }
 }

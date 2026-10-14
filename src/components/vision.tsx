@@ -40,8 +40,8 @@ export function Vision() {
           <dl className="mt-10 grid gap-8 border-t border-dashed border-ink/20 pt-8 md:grid-cols-3">
             {PROMISES.map((p) => (
               <div key={p.title}>
-                <dt className="font-semibold">{p.title}</dt>
-                <dd className="mt-1 text-ink/65">{p.body}</dd>
+                <dt className="font-display text-xl font-semibold tracking-tight">{p.title}</dt>
+                <dd className="mt-1 font-hand text-xl leading-snug text-ink/70">{p.body}</dd>
               </div>
             ))}
           </dl>

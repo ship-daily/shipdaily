@@ -34,7 +34,7 @@ export function Hero() {
 
       {/* Right sticky note + scribble */}
       <div aria-hidden className="pointer-events-none absolute inset-0 hidden lg:block">
-        <div className="note float absolute top-14 right-4 w-48 bg-note-butter px-6 pt-8 pb-7 text-ink [--tilt:6deg]">
+        <div className="note absolute top-14 right-4 w-48 bg-note-butter px-6 pt-8 pb-7 text-ink [--tilt:6deg]">
           <span className="tape -top-3 left-1/2 -ml-11 rotate-[-4deg]" />
           <p className="font-hand text-[23px] leading-[1.1]">
             Build
