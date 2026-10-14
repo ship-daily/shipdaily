@@ -1,5 +1,5 @@
 import { Logo } from "@/components/logo";
-import { APP_URL, DISCORD_URL, GITHUB_URL } from "@/lib/site";
+import { APP_LIVE, APP_URL, DISCORD_URL, GITHUB_URL } from "@/lib/site";
 
 export function Footer() {
   return (
@@ -10,7 +10,11 @@ export function Footer() {
           <span className="ml-2">Built in public. MIT licensed.</span>
         </div>
         <nav className="flex gap-6">
-          <a href={APP_URL} className="hover:text-chalk">App</a>
+          {APP_LIVE && (
+            <a href={APP_URL} className="hover:text-chalk">
+              App
+            </a>
+          )}
           <a href={DISCORD_URL} className="hover:text-chalk">Discord</a>
           <a href={GITHUB_URL} className="hover:text-chalk">GitHub</a>
         </nav>

@@ -1,6 +1,6 @@
 import { ArrowRight, ArrowUpRight, Check, Rocket } from "lucide-react";
 import { Globe, Sparkle, Spiral, SwoopArrow } from "@/components/doodles";
-import { APP_URL } from "@/lib/site";
+import { APP_LIVE, APP_URL } from "@/lib/site";
 
 const PAGE_HAS = [
   "What it does, in your words",
@@ -36,21 +36,40 @@ export function Showcase() {
             ))}
           </ul>
 
-          <div className="mt-10 flex flex-wrap gap-3">
-            <a
-              href={`${APP_URL}/submit`}
-              className="group inline-flex items-center gap-2 rounded-xl bg-chalk px-5 py-3 font-semibold text-ink shadow-[0_10px_24px_-10px_rgb(0_0_0/0.7)] transition-transform hover:-translate-y-0.5"
-            >
-              Submit your product
-              <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
-            </a>
-            <a
-              href={APP_URL}
-              className="inline-flex items-center gap-2 rounded-xl border border-chalk/25 px-5 py-3 font-semibold transition-colors hover:border-chalk/50 hover:bg-white/5"
-            >
-              Browse the wall
-            </a>
-          </div>
+          {APP_LIVE ? (
+            <div className="mt-10 flex flex-wrap gap-3">
+              <a
+                href={`${APP_URL}/submit`}
+                className="group inline-flex items-center gap-2 rounded-xl bg-chalk px-5 py-3 font-semibold text-ink shadow-[0_10px_24px_-10px_rgb(0_0_0/0.7)] transition-transform hover:-translate-y-0.5"
+              >
+                Submit your product
+                <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
+              </a>
+              <a
+                href={APP_URL}
+                className="inline-flex items-center gap-2 rounded-xl border border-chalk/25 px-5 py-3 font-semibold transition-colors hover:border-chalk/50 hover:bg-white/5"
+              >
+                Browse the wall
+              </a>
+            </div>
+          ) : (
+            <div className="mt-10 flex flex-wrap items-center gap-3">
+              <span
+                aria-disabled="true"
+                className="inline-flex cursor-not-allowed items-center gap-2 rounded-xl bg-chalk/50 px-5 py-3 font-semibold text-ink/70"
+              >
+                Submit your product
+                <ArrowRight className="size-4" />
+              </span>
+              <span
+                aria-disabled="true"
+                className="inline-flex cursor-not-allowed items-center gap-2 rounded-xl border border-chalk/15 px-5 py-3 font-semibold text-chalk/50"
+              >
+                Browse the wall
+              </span>
+              <span className="chalk ml-1 -rotate-3 font-hand text-2xl text-mint">Coming soon!</span>
+            </div>
+          )}
         </div>
 
         {/* Example product page */}

@@ -1,6 +1,7 @@
-// TODO: replace with the real Discord invite once the server is set up.
-export const DISCORD_URL = "https://discord.gg/shipdaily";
+export const DISCORD_URL = "https://discord.gg/ZeqkBS9nuu";
 export const APP_URL = "https://app.shipdaily.ai";
+// Flip once app.shipdaily.ai is deployed; until then app links render as "Coming soon".
+export const APP_LIVE = false;
 export const GITHUB_URL = "https://github.com/ship-daily";
 
 export const NAV_LINKS = [
