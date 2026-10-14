@@ -1,26 +1,144 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --board: #0b2c1a;
+  --board-deep: #13231b;
+  --chalk: #f2f0e6;
+  --chalk-dim: #c9cdc4;
+  --mint: #86e3ab;
+  --mint-deep: #5cc98a;
+  --ink: #17201b;
+
+  --note-lilac: #d8c9f6;
+  --note-butter: #f7e8a4;
+  --note-blush: #f7cdd6;
+  --note-mint: #c3ead2;
+  --note-sky: #c9dcf6;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-board: var(--board);
+  --color-board-deep: var(--board-deep);
+  --color-chalk: var(--chalk);
+  --color-chalk-dim: var(--chalk-dim);
+  --color-mint: var(--mint);
+  --color-mint-deep: var(--mint-deep);
+  --color-ink: var(--ink);
+  --color-note-lilac: var(--note-lilac);
+  --color-note-butter: var(--note-butter);
+  --color-note-blush: var(--note-blush);
+  --color-note-mint: var(--note-mint);
+  --color-note-sky: var(--note-sky);
   --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-display: var(--font-shantell);
+  --font-hand: var(--font-patrick-hand);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
+/* Chalkboard texture is drawn by <Chalkboard />; this is the fallback colour while it loads. */
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  position: relative;
+  color: var(--chalk);
+  background-color: var(--board);
+}
+
+.board-calm {
+  background: var(--board);
+  opacity: 0.5;
+  mask-image:
+    linear-gradient(90deg, rgb(0 0 0 / 0.55), #000 60px, #000 calc(100% - 60px), rgb(0 0 0 / 0.55)),
+    linear-gradient(180deg, rgb(0 0 0 / 0.55), #000 60px, #000 calc(100% - 60px), rgb(0 0 0 / 0.55));
+  mask-composite: intersect;
+}
+
+::selection {
+  background: var(--mint);
+  color: var(--ink);
+}
+
+@layer components {
+/* Chalk: soft glow + displacement filter defined in <ChalkFilters /> */
+.chalk {
+  filter: url(#chalk);
+  text-shadow:
+    0 0 1px rgb(242 240 230 / 0.4),
+    0 0 10px rgb(242 240 230 / 0.08);
+}
+
+/* Body copy written on the board */
+.chalk-text {
+  font-family: var(--font-patrick-hand), var(--font-geist-sans);
+  letter-spacing: 0.01em;
+  filter: url(#chalk-soft);
+  text-shadow:
+    0 0 1px rgb(242 240 230 / 0.35),
+    0 0 8px rgb(242 240 230 / 0.06);
+}
+
+.chalk-rough {
+  filter: url(#chalk-rough);
+}
+
+/* Sticky notes */
+.note {
+  position: relative;
+  border-radius: 3px 3px 14px 3px;
+  background-image:
+    linear-gradient(170deg, rgb(255 255 255 / 0.35), transparent 40%),
+    linear-gradient(to bottom, transparent 85%, rgb(0 0 0 / 0.05));
+  box-shadow:
+    0 1px 1px rgb(0 0 0 / 0.15),
+    0 10px 18px -6px rgb(0 0 0 / 0.45),
+    0 22px 30px -18px rgb(0 0 0 / 0.5);
+  transform: rotate(var(--tilt, 0deg));
+  transition:
+    transform 260ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    box-shadow 260ms ease;
+}
+
+.note:hover {
+  transform: rotate(0deg) translateY(-6px) scale(1.015);
+  box-shadow:
+    0 2px 2px rgb(0 0 0 / 0.15),
+    0 18px 28px -8px rgb(0 0 0 / 0.5),
+    0 34px 44px -22px rgb(0 0 0 / 0.55);
+}
+
+/* Masking tape */
+.tape {
+  position: absolute;
+  height: 26px;
+  width: 92px;
+  background: rgb(214 226 205 / 0.55);
+  backdrop-filter: blur(1px);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.15);
+  mask-image: linear-gradient(90deg, transparent 0 2px, black 2px calc(100% - 2px), transparent calc(100% - 2px));
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(var(--tilt, 0deg)); }
+  50% { transform: translateY(-6px) rotate(var(--tilt, 0deg)); }
+}
+
+.float {
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes draw {
+  from { clip-path: inset(0 100% 0 0); }
+  to { clip-path: inset(0 0 0 0); }
+}
+
+.draw {
+  animation: draw 0.9s 0.35s cubic-bezier(0.6, 0, 0.3, 1) both;
+}
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .float, .draw { animation: none; }
+  .note, .note:hover { transition: none; }
 }
