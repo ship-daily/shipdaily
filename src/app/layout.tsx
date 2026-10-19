@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
 import { Geist, Patrick_Hand, Shantell_Sans } from "next/font/google";
-import { ChalkFilters } from "@/components/chalk-filters";
-import { Chalkboard } from "@/components/chalkboard";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -49,8 +47,6 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${geistSans.variable} ${shantell.variable} ${patrickHand.variable} antialiased`}
     >
       <body className="min-h-dvh flex flex-col font-sans">
-        <Chalkboard />
-        <ChalkFilters />
         {children}
       </body>
     </html>

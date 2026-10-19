@@ -1,5 +1,5 @@
 {
-  "name": "shipdaily-web",
+  "name": "shipdaily",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -33,9 +33,9 @@
     "sharp",
     "unrs-resolver"
   ],
-  "license": "MIT",
+  "license": "AGPL-3.0-only",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ship-daily/shipdaily-web.git"
+    "url": "https://github.com/ship-daily/shipdaily.git"
   }
 }

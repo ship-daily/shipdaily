@@ -1,5 +1,5 @@
 import { ArrowRight, Code2, Handshake, LifeBuoy, MessageSquareHeart, Wrench } from "lucide-react";
-import { ArrowLeft, ChalkBox, Heart, Leaf } from "@/components/doodles";
+import { ArrowLeft, ChalkBox, Heart, Leaf } from "@/components/marketing/doodles";
 import { DISCORD_URL } from "@/lib/site";
 
 const ASKS = [

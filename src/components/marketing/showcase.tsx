@@ -1,5 +1,5 @@
 import { ArrowRight, ArrowUpRight, Check, Rocket } from "lucide-react";
-import { Globe, Sparkle, Spiral, SwoopArrow } from "@/components/doodles";
+import { Globe, Sparkle, Spiral, SwoopArrow } from "@/components/marketing/doodles";
 import { APP_LIVE, APP_URL } from "@/lib/site";
 
 const PAGE_HAS = [

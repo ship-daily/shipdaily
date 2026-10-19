@@ -1,5 +1,5 @@
 import { ArrowRight } from "lucide-react";
-import { Burst, ChalkOval, Crown, CurlyArrow, DiscordIcon, Heart, Leaf, Smiley, Sparkle, Star, SwoopArrow, Underline } from "@/components/doodles";
+import { Burst, ChalkOval, Crown, CurlyArrow, DiscordIcon, Heart, Leaf, Smiley, Sparkle, Star, SwoopArrow, Underline } from "@/components/marketing/doodles";
 import { DISCORD_URL } from "@/lib/site";
 
 export function Hero() {

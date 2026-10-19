@@ -1,4 +1,4 @@
-import { Crown, CurlyArrow, Squiggle } from "@/components/doodles";
+import { Crown, CurlyArrow, Squiggle } from "@/components/marketing/doodles";
 
 const STEPS = [
   { title: "Join the Discord", body: "Say hi, share what you're building and what you're stuck on." },

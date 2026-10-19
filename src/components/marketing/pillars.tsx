@@ -1,4 +1,4 @@
-import { Burst, ChalkDivider, ChatIcon, CompassIcon, MegaphoneIcon, ToolboxIcon } from "@/components/doodles";
+import { Burst, ChalkDivider, ChatIcon, CompassIcon, MegaphoneIcon, ToolboxIcon } from "@/components/marketing/doodles";
 
 const PILLARS = [
   { icon: MegaphoneIcon, title: "Launch promotion", body: "Share your launch and get real eyes on it from people who know how hard shipping is." },

@@ -1,8 +1,8 @@
-# ShipDaily — Landing Page
+# ShipDaily
 
-Source for [shipdaily.ai](https://shipdaily.ai), the landing page for **ShipDaily**: a community where early-stage founders, indie hackers, and SaaS builders support each other through launch promotion, feedback, guidance, and resource sharing.
+Source for [shipdaily.ai](https://shipdaily.ai) — the landing page and the app for **ShipDaily**: a community where early-stage founders, indie hackers, and SaaS builders support each other through launch promotion, feedback, guidance, and resource sharing.
 
-The main app lives at [app.shipdaily.ai](https://app.shipdaily.ai) — see [ship-daily/shipdaily-app](https://github.com/ship-daily/shipdaily-app).
+Everything lives in this one Next.js app: the landing page is in `src/app/(marketing)`, and the app routes sit alongside it.
 
 ## Scope
 
@@ -31,4 +31,4 @@ Issues and pull requests are welcome. For larger changes, open an issue first so
 
 ## License
 
-[MIT](./LICENSE)
+[AGPL-3.0](./LICENSE)

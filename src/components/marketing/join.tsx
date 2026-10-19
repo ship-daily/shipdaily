@@ -1,5 +1,5 @@
 import { ArrowRight } from "lucide-react";
-import { Burst, DiscordIcon, Heart, Sparkle, Underline } from "@/components/doodles";
+import { Burst, DiscordIcon, Heart, Sparkle, Underline } from "@/components/marketing/doodles";
 import { CHANNELS, DISCORD_URL } from "@/lib/site";
 
 export function Join() {

@@ -1,4 +1,4 @@
-import { Logo } from "@/components/logo";
+import { Logo } from "@/components/ui/logo";
 import { APP_LIVE, APP_URL, DISCORD_URL, GITHUB_URL } from "@/lib/site";
 
 export function Footer() {
@@ -7,7 +7,7 @@ export function Footer() {
       <div className="chalk-text flex flex-col items-center justify-between gap-6 text-lg text-chalk-dim md:flex-row">
         <div className="flex items-center gap-2">
           <Logo size="sm" />
-          <span className="ml-2">Built in public. MIT licensed.</span>
+          <span className="ml-2">Built in public. AGPL licensed.</span>
         </div>
         <nav className="flex gap-6">
           {APP_LIVE && (

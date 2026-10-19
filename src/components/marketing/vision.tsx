@@ -1,6 +1,6 @@
 const PROMISES = [
   { title: "Free core community", body: "Joining, sharing and helping each other stays free." },
-  { title: "Open source", body: "The whole platform is MIT licensed and built in public." },
+  { title: "Open source", body: "The whole platform is AGPL licensed and built in public." },
   { title: "Shaped by members", body: "We build what founders here actually ask for." },
 ];
 

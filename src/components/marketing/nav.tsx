@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { SmallUnderline, Sparkle } from "@/components/doodles";
-import { Logo } from "@/components/logo";
+import { SmallUnderline, Sparkle } from "@/components/marketing/doodles";
+import { Logo } from "@/components/ui/logo";
 import { DISCORD_URL, NAV_LINKS } from "@/lib/site";
 
 export function Nav() {
