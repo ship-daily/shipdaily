@@ -12,7 +12,26 @@ Comment on an issue before you start so nobody else picks it up at the same time
 
 ## Local setup
 
-**Requirements:** [Bun](https://bun.sh) 1.3+ and [Docker](https://www.docker.com) (for Postgres). Any Postgres 15+ works if you'd rather not use Docker.
+### Option 1: Docker (easiest)
+
+Only [Docker](https://www.docker.com/products/docker-desktop/) needed:
+
+```bash
+git clone https://github.com/ship-daily/shipdaily.git
+cd shipdaily
+docker compose up
+```
+
+This starts Postgres, runs the migrations and starts the app with hot reload at http://localhost:3000. Edit files on your machine as usual; the app reloads.
+
+- **Sign in:** use any email. The 6-digit code appears in `docker compose logs -f app`.
+- **Optional keys:** GitHub/Google OAuth keys or `RESEND_API_KEY` in `.env.local` are picked up. The database settings in `docker-compose.yml` always win, so Docker never touches another database.
+- **Added a dependency?** `docker compose build` and `docker compose up` again.
+- **Start over with an empty database:** `docker compose down -v`.
+
+### Option 2: Bun on your machine
+
+**Requirements:** [Bun](https://bun.sh) 1.3+ and Postgres 15+ (`docker compose up -d db` gives you one).
 
 ```bash
 git clone https://github.com/ship-daily/shipdaily.git
@@ -20,7 +39,7 @@ cd shipdaily
 bun install
 
 cp .env.example .env.local      # then set BETTER_AUTH_SECRET (openssl rand -base64 32)
-docker compose up -d            # Postgres on localhost:5432
+docker compose up -d db         # Postgres on localhost:5432
 bun run db:migrate              # create the tables
 
 bun dev                         # http://localhost:3000

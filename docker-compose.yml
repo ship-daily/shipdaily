@@ -1,4 +1,21 @@
-# Local Postgres for development: `docker compose up -d`
+# Everything you need to run ShipDaily locally:
+#
+#   docker compose up
+#
+# Starts Postgres, applies migrations, then runs the app with hot reload at http://localhost:3000.
+# Sign in with email: the 6-digit code shows up in `docker compose logs -f app`.
+#
+# Optional: put GitHub/Google OAuth keys or RESEND_API_KEY in .env.local and they're picked up.
+# Just want the database (and run `bun dev` yourself)? `docker compose up -d db`
+
+x-app-env: &app-env
+  # Always use the database container, even if .env.local points elsewhere (e.g. Neon).
+  DATABASE_URL: postgres://shipdaily:shipdaily@db:5432/shipdaily
+  DATABASE_URL_UNPOOLED: postgres://shipdaily:shipdaily@db:5432/shipdaily
+  BETTER_AUTH_URL: http://localhost:3000
+  # Local-only secret so the app works with zero setup. Never use this in production.
+  BETTER_AUTH_SECRET: ${BETTER_AUTH_SECRET:-local-docker-secret-change-me-0123456789abcdef}
+
 services:
   db:
     image: postgres:17-alpine
@@ -11,6 +28,42 @@ services:
       - "5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U shipdaily -d shipdaily"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+
+  # Runs once: creates or updates the tables, then exits.
+  migrate:
+    image: shipdaily-dev
+    build:
+      context: .
+      target: dev
+    command: ["bun", "run", "db:migrate"]
+    environment: *app-env
+    volumes:
+      - .:/app
+      - node_modules:/app/node_modules
+    depends_on:
+      db:
+        condition: service_healthy
+
+  app:
+    image: shipdaily-dev
+    environment: *app-env
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+      # Keep the container's Linux dependencies and build cache separate from your machine's.
+      - node_modules:/app/node_modules
+      - next_cache:/app/.next
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
 
 volumes:
   pgdata:
+  node_modules:
+  next_cache:
