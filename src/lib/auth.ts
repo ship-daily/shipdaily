@@ -3,14 +3,22 @@ import "server-only";
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { nextCookies } from "better-auth/next-js";
-import { magicLink } from "better-auth/plugins/magic-link";
+import { emailOTP } from "better-auth/plugins/email-otp";
 import { cache } from "react";
 import { getDb } from "@/db";
 import * as schema from "@/db/schema";
+import { sendEmail } from "@/lib/email";
+import { SIGN_IN_CODE_SECONDS, signInCodeEmail } from "@/lib/emails/sign-in-code";
 
 type SocialProviders = NonNullable<Parameters<typeof betterAuth>[0]["socialProviders"]>;
 
-// OAuth providers are optional so contributors can run the app without creating OAuth apps.
+export type OAuthProvider = "github" | "google";
+
+/** OAuth providers with credentials set. They're optional so contributors can run the app without OAuth apps. */
+export function configuredOAuthProviders(): OAuthProvider[] {
+  return Object.keys(socialProviders()) as OAuthProvider[];
+}
+
 function socialProviders(): SocialProviders {
   const providers: SocialProviders = {};
   const { GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET, GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } = process.env;
@@ -27,19 +35,36 @@ function createAuth() {
   return betterAuth({
     database: drizzleAdapter(getDb(), { provider: "pg", schema }),
     socialProviders: socialProviders(),
+    account: {
+      // GitHub and Google verify emails, so signing in with either joins an existing account with that email.
+      accountLinking: { enabled: true, trustedProviders: ["github", "google"] },
+    },
+    rateLimit: {
+      // Enabled in production by default. Stored in Postgres: Workers don't share memory between requests.
+      storage: "database",
+      modelName: "rateLimit",
+      customRules: {
+        "/email-otp/send-verification-otp": { window: 60, max: 3 },
+        "/sign-in/email-otp": { window: 60, max: 10 },
+      },
+    },
+    advanced: {
+      // Real client IP for rate limiting on Cloudflare, falling back for other hosts.
+      ipAddress: { ipAddressHeaders: ["cf-connecting-ip", "x-forwarded-for"] },
+    },
     user: {
       additionalFields: {
         handle: { type: "string", required: false, input: false },
       },
     },
     plugins: [
-      magicLink({
-        sendMagicLink: async ({ email, url }) => {
-          // TODO: send through an email provider. Until then the link is only logged.
-          if (process.env.NODE_ENV === "production") {
-            throw new Error("Email sign-in is not configured yet.");
-          }
-          console.info(`[auth] Magic link for ${email}: ${url}`);
+      emailOTP({
+        otpLength: 6,
+        expiresIn: SIGN_IN_CODE_SECONDS,
+        allowedAttempts: 5,
+        storeOTP: "hashed",
+        sendVerificationOTP: async ({ email, otp }) => {
+          await sendEmail({ to: email, ...signInCodeEmail(otp) });
         },
       }),
       // Must stay last: lets server actions set auth cookies.

@@ -26,7 +26,7 @@ bun run db:migrate              # create the tables
 bun dev                         # http://localhost:3000
 ```
 
-GitHub and Google sign-in are optional locally. Without them, sign in with email: the magic link is printed in the terminal running `bun dev`.
+GitHub and Google sign-in are optional locally. Without them, sign in with email: without `RESEND_API_KEY`, the 6-digit code is printed in the terminal running `bun dev`. Preview emails at `/api/dev/emails/sign-in-code`.
 
 ### Useful commands
 
@@ -42,15 +42,23 @@ GitHub and Google sign-in are optional locally. Without them, sign in with email
 | `bun run db:studio` | Browse the database |
 | `bun run cf-typegen` | Regenerate `cloudflare-env.d.ts` after changing `wrangler.jsonc` |
 
+### Troubleshooting
+
+- **Pages reload in a loop in `bun dev`** (`HMR hash mismatch` in the browser console): the Turbopack dev cache is stale. Stop the server, run `rm -rf .next`, and start it again.
+- **Using Neon instead of Docker:** put Neon's pooled URL in `DATABASE_URL` and the direct URL in `DATABASE_URL_UNPOOLED` (`neon env pull` does this). Migrations use the direct one.
+
 ## Project layout
 
 ```
 src/
 ├── app/
 │   ├── (marketing)/          # landing page
+│   ├── (auth)/               # sign-in and onboarding
+│   ├── (app)/                # signed-in app (home, …)
 │   └── api/auth/[...all]/    # Better Auth endpoints
 ├── components/
 │   ├── marketing/            # landing page sections
+│   ├── app/                  # signed-in app shell
 │   └── ui/                   # shared components
 ├── db/
 │   ├── schema.ts             # Drizzle schema (all tables)
@@ -58,6 +66,9 @@ src/
 └── lib/
     ├── auth.ts               # getAuth(): Better Auth server config
     ├── auth-client.ts        # client-side auth helpers
+    ├── session.ts            # getSession(), requireUser(), requireOnboardedUser()
+    ├── email.ts              # sendEmail() through Resend
+    ├── emails/               # email templates (layout.ts = shared branded look)
     └── site.ts               # URLs and links
 drizzle/                      # generated SQL migrations (commit these)
 ```

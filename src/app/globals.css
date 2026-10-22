@@ -133,3 +133,12 @@ body {
   .draw { animation: none; }
   .note, .note:hover { transition: none; }
 }
+
+/* Notes that hold forms or controls stay put on hover */
+.note.note-still:hover {
+  transform: rotate(var(--tilt, 0deg));
+  box-shadow:
+    0 1px 1px rgb(0 0 0 / 0.15),
+    0 10px 18px -6px rgb(0 0 0 / 0.45),
+    0 22px 30px -18px rgb(0 0 0 / 0.5);
+}

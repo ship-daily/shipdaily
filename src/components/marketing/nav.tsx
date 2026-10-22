@@ -2,7 +2,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { SmallUnderline, Sparkle } from "@/components/marketing/doodles";
 import { Logo } from "@/components/ui/logo";
-import { DISCORD_URL, NAV_LINKS } from "@/lib/site";
+import { NAV_LINKS } from "@/lib/site";
 
 export function Nav() {
   return (
@@ -21,13 +21,13 @@ export function Nav() {
         ))}
       </nav>
 
-      <a
-        href={DISCORD_URL}
+      <Link
+        href="/sign-in"
         className="group inline-flex items-center gap-1.5 rounded-lg bg-mint px-4 py-2.5 text-sm font-semibold text-ink shadow-[0_3px_0_var(--mint-deep),0_10px_20px_-8px_rgb(0_0_0/0.6)] transition-all hover:-translate-y-0.5 hover:shadow-[0_5px_0_var(--mint-deep),0_14px_24px_-8px_rgb(0_0_0/0.6)] active:translate-y-0.5 active:shadow-[0_1px_0_var(--mint-deep)]"
       >
-        Join Discord
+        Log in
         <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
-      </a>
+      </Link>
     </header>
   );
 }

@@ -20,11 +20,11 @@ const BANDS: [number, number][] = [
   [140, 520],
   [360, 760],
 ];
-const FADE = 100; // css px of cross-fade between pieces
+const FADE = 100; // max css px of cross-fade between pieces (shrinks on narrow screens)
 const MAX_CANVAS_AREA = 16_000_000; // stay under iOS Safari's canvas size limit
 
 /** A slice of the photo scaled to the page width, optionally mirrored, faded in at the top. */
-function piece(img: HTMLImageElement, sy: number, sh: number, cssW: number, res: number, mirror: boolean, fadeTop: boolean) {
+function piece(img: HTMLImageElement, sy: number, sh: number, cssW: number, res: number, mirror: boolean, fade: number) {
   const scale = cssW / img.naturalWidth;
   const h = sh * scale;
   const off = document.createElement("canvas");
@@ -38,9 +38,9 @@ function piece(img: HTMLImageElement, sy: number, sh: number, cssW: number, res:
     ctx.scale(-1, 1);
   }
   ctx.drawImage(img, 0, sy, img.naturalWidth, sh, 0, 0, cssW, h);
-  if (fadeTop) {
+  if (fade > 0) {
     ctx.setTransform(res, 0, 0, res, 0, 0);
-    const g = ctx.createLinearGradient(0, 0, 0, FADE);
+    const g = ctx.createLinearGradient(0, 0, 0, fade);
     g.addColorStop(0, "rgba(0,0,0,0)");
     g.addColorStop(1, "rgba(0,0,0,1)");
     ctx.globalCompositeOperation = "destination-in";
@@ -67,8 +67,14 @@ function draw(canvas: HTMLCanvasElement, img: HTMLImageElement, cssW: number, cs
   ctx.imageSmoothingQuality = "high";
   ctx.scale(res, res);
 
-  const top = piece(img, 0, mid, cssW, res, false, false);
-  const bottom = piece(img, mid, ih - mid, cssW, res, false, true);
+  // Bands shrink with the page width; on phones they can be shorter than FADE, which would make the
+  // fill loop below step backwards forever. Keep the fade at most a third of the shortest band.
+  const scale = cssW / iw;
+  const shortestBand = Math.min(...BANDS.map(([from, to]) => (to - from) * scale));
+  const fade = Math.max(0, Math.min(FADE, Math.floor(shortestBand / 3)));
+
+  const top = piece(img, 0, mid, cssW, res, false, 0);
+  const bottom = piece(img, mid, ih - mid, cssW, res, false, fade);
 
   if (top.h + bottom.h >= cssH) {
     ctx.drawImage(img, 0, 0, cssW, cssH);
@@ -78,17 +84,17 @@ function draw(canvas: HTMLCanvasElement, img: HTMLImageElement, cssW: number, cs
   ctx.drawImage(top.canvas, 0, 0, cssW, top.h);
 
   const variants = [
-    piece(img, BANDS[0][0], BANDS[0][1] - BANDS[0][0], cssW, res, false, true),
-    piece(img, BANDS[1][0], BANDS[1][1] - BANDS[1][0], cssW, res, true, true),
-    piece(img, BANDS[0][0], BANDS[0][1] - BANDS[0][0], cssW, res, true, true),
-    piece(img, BANDS[1][0], BANDS[1][1] - BANDS[1][0], cssW, res, false, true),
+    piece(img, BANDS[0][0], BANDS[0][1] - BANDS[0][0], cssW, res, false, fade),
+    piece(img, BANDS[1][0], BANDS[1][1] - BANDS[1][0], cssW, res, true, fade),
+    piece(img, BANDS[0][0], BANDS[0][1] - BANDS[0][0], cssW, res, true, fade),
+    piece(img, BANDS[1][0], BANDS[1][1] - BANDS[1][0], cssW, res, false, fade),
   ];
   const bottomY = cssH - bottom.h;
-  let y = top.h - FADE;
-  for (let i = 0; y < bottomY + FADE; i++) {
+  let y = top.h - fade;
+  for (let i = 0; y < bottomY + fade; i++) {
     const v = variants[i % variants.length];
     ctx.drawImage(v.canvas, 0, y, cssW, v.h);
-    y += v.h - FADE;
+    y += Math.max(1, v.h - fade);
   }
 
   ctx.drawImage(bottom.canvas, 0, bottomY, cssW, bottom.h);

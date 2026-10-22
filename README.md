@@ -69,7 +69,7 @@ bun run db:migrate
 bun dev                         # http://localhost:3000
 ```
 
-No OAuth apps needed locally: sign in with email and the magic link is printed in your terminal. See [CONTRIBUTING.md](./CONTRIBUTING.md) for all commands, the project layout and conventions.
+No OAuth apps or email keys needed locally: sign in with email and the 6-digit code is printed in your terminal. See [CONTRIBUTING.md](./CONTRIBUTING.md) for all commands, the project layout and conventions.
 
 ## Tech stack
 
