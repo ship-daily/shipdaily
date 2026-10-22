@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Questions and ideas
+    url: https://discord.gg/ZeqkBS9nuu
+    about: Ask questions and talk ideas through with the community on Discord.
+  - name: Report a security vulnerability
+    url: https://github.com/ship-daily/shipdaily/security/advisories/new
+    about: Please report security problems privately, not in public issues.

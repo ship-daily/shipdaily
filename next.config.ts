@@ -1,9 +1,13 @@
 import type { NextConfig } from "next";
+import { initOpenNextCloudflareForDev } from "@opennextjs/cloudflare";
 
 const nextConfig: NextConfig = {
-  /* config options here */
-  cacheComponents: true,
-  partialPrefetching: true,
+  // cacheComponents and partialPrefetching are off: pages hang under OpenNext on Cloudflare
+  // ("Cannot perform I/O on behalf of a different request"). Re-enable once OpenNext supports them.
+  // pg loads pg-cloudflare at runtime only on workerd, so file tracing misses it.
+  outputFileTracingIncludes: {
+    "/*": ["./node_modules/pg-cloudflare/**/*"],
+  },
   turbopack: {
     rules: {
       "*.css": {
@@ -15,3 +19,6 @@ const nextConfig: NextConfig = {
 };
 
 export default nextConfig;
+
+// Exposes Cloudflare bindings (e.g. HYPERDRIVE) to `next dev` via getCloudflareContext().
+initOpenNextCloudflareForDev();

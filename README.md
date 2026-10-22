@@ -55,45 +55,32 @@ The only things kept out of this repo are anti-abuse thresholds and ranking weig
 
 ## Getting started
 
-**Requirements:** [Bun](https://bun.sh) 1.3+
+**Requirements:** [Bun](https://bun.sh) 1.3+ and [Docker](https://www.docker.com) (for Postgres)
 
 ```bash
 git clone https://github.com/ship-daily/shipdaily.git
 cd shipdaily
 bun install
-bun dev
+
+cp .env.example .env.local      # set BETTER_AUTH_SECRET (openssl rand -base64 32)
+docker compose up -d            # Postgres on localhost:5432
+bun run db:migrate
+
+bun dev                         # http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000).
-
-| Command | What it does |
-|---|---|
-| `bun dev` | Start the dev server |
-| `bun run build` | Production build |
-| `bun run start` | Serve the production build |
-| `bun run lint` | Run ESLint |
-
-## Project structure
-
-```
-src/
-├── app/
-│   ├── (marketing)/      # landing page at /
-│   └── layout.tsx        # root layout: fonts, metadata
-├── components/
-│   ├── marketing/        # landing page sections and chalk doodles
-│   └── ui/               # shared components (logo, …)
-└── lib/
-    └── site.ts           # URLs, nav links, community channels
-```
-
-App routes will live alongside `(marketing)` in `src/app/`.
+No OAuth apps needed locally: sign in with email and the magic link is printed in your terminal. See [CONTRIBUTING.md](./CONTRIBUTING.md) for all commands, the project layout and conventions.
 
 ## Tech stack
 
 - [Next.js 16](https://nextjs.org) (App Router) + React 19 + TypeScript
 - [Tailwind CSS v4](https://tailwindcss.com)
+- [Postgres](https://www.postgresql.org) + [Drizzle ORM](https://orm.drizzle.team)
+- [Better Auth](https://www.better-auth.com): GitHub, Google and email sign-in
+- [Cloudflare Workers](https://workers.cloudflare.com) via [OpenNext](https://opennext.js.org/cloudflare), with [Hyperdrive](https://developers.cloudflare.com/hyperdrive/) for Postgres
 - [Bun](https://bun.sh)
+
+Self-hosting elsewhere works too: set `DATABASE_URL` and run `bun run build && bun run start`.
 
 ## Contributing
 
@@ -103,7 +90,7 @@ Issues and pull requests are welcome.
 - **Bigger changes** (new features, refactors): open an issue first so we can agree on the approach before you put time in.
 - **Not sure?** Ask in [Discord](https://discord.gg/ZeqkBS9nuu).
 
-Before opening a PR, make sure `bun run lint` and `bun run build` pass.
+See [CONTRIBUTING.md](./CONTRIBUTING.md) for setup, conventions and the [CLA](./CLA.md). Before opening a PR, make sure `bun run lint`, `bun run typecheck` and `bun run build` pass.
 
 ## Community
 
