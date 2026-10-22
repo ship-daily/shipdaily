@@ -4,11 +4,11 @@ import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { nextCookies } from "better-auth/next-js";
 import { emailOTP } from "better-auth/plugins/email-otp";
-import { cache } from "react";
 import { getDb } from "@/db";
 import * as schema from "@/db/schema";
 import { sendEmail } from "@/lib/email";
 import { SIGN_IN_CODE_SECONDS, signInCodeEmail } from "@/lib/emails/sign-in-code";
+import { perRequest } from "@/lib/per-request";
 
 type SocialProviders = NonNullable<Parameters<typeof betterAuth>[0]["socialProviders"]>;
 
@@ -74,6 +74,6 @@ function createAuth() {
 }
 
 /** Better Auth instance for the current request (it holds a per-request database client). */
-export const getAuth = cache(createAuth);
+export const getAuth = perRequest(createAuth);
 
 export type Session = ReturnType<typeof createAuth>["$Infer"]["Session"];

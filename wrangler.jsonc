@@ -15,17 +15,13 @@
       "service": "shipdaily"
     }
   ],
-  "images": {
-    // Image optimization for next/image. See https://opennext.js.org/cloudflare/howtos/image
-    "binding": "IMAGES"
-  },
   "hyperdrive": [
     {
       // Postgres connection pooling. Create one with:
       //   bunx wrangler hyperdrive create shipdaily --connection-string="postgres://..."
       // and paste its id here. Local dev uses localConnectionString (the docker-compose database).
       "binding": "HYPERDRIVE",
-      "id": "00000000000000000000000000000000",
+      "id": "12d4f2fe7dda4d1cbbb39afccd29c6bd",
       "localConnectionString": "postgres://shipdaily:shipdaily@localhost:5432/shipdaily"
     }
   ],

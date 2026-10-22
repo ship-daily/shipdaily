@@ -8,6 +8,9 @@ const nextConfig: NextConfig = {
   outputFileTracingIncludes: {
     "/*": ["./node_modules/pg-cloudflare/**/*"],
   },
+  // Serve images as-is: the only image is the logo, and this avoids Cloudflare Images (a paid-capable
+  // service) so hosting stays on the Workers free plan.
+  images: { unoptimized: true },
   turbopack: {
     rules: {
       "*.css": {
