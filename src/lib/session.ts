@@ -7,7 +7,10 @@ import { getAuth } from "@/lib/auth";
 
 /** The signed-in session for this request, or null. */
 export const getSession = cache(async () => {
-  return getAuth().api.getSession({ headers: await headers() });
+  // Read headers first: it marks the route as dynamic before anything touches the database,
+  // so builds without database credentials (CI, preview hosts) don't try to prerender it.
+  const requestHeaders = await headers();
+  return getAuth().api.getSession({ headers: requestHeaders });
 });
 
 /** Signed-in user, or redirect to sign-in. */
