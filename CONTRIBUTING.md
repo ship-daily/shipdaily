@@ -41,6 +41,7 @@ bun install
 cp .env.example .env.local      # then set BETTER_AUTH_SECRET (openssl rand -base64 32)
 docker compose up -d db         # Postgres on localhost:5432
 bun run db:migrate              # create the tables
+bun run db:seed                 # optional: sample users, products, ships and a live Launch Week
 
 bun dev                         # http://localhost:3000
 ```
@@ -59,6 +60,7 @@ GitHub and Google sign-in are optional locally. Without them, sign in with email
 | `bun run db:generate` | Create a migration after changing `src/db/schema.ts` |
 | `bun run db:migrate` | Apply migrations |
 | `bun run db:studio` | Browse the database |
+| `bun run db:seed` | Fill the local database with sample data. Safe to rerun; refuses when `NODE_ENV=production` or the database isn't local (override with `SEED_ALLOW_REMOTE=1`) |
 | `bun run cf-typegen` | Regenerate `cloudflare-env.d.ts` after changing `wrangler.jsonc` |
 
 ### Troubleshooting
