@@ -90,7 +90,7 @@ export function Hero() {
             href="#showcase"
             className="inline-flex items-center gap-2 rounded-xl border border-chalk/25 px-6 py-3.5 font-semibold text-chalk transition-colors hover:border-chalk/50 hover:bg-white/5"
           >
-            See the showcase
+            See how it works
           </a>
         </div>
         <p className="chalk-text mt-5 text-lg text-chalk-dim">Free for founders. Open source.</p>

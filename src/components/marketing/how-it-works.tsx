@@ -1,10 +1,10 @@
 import { Crown, CurlyArrow, Squiggle } from "@/components/marketing/doodles";
 
 const STEPS = [
-  { title: "Join the Discord", body: "Say hi, share what you're building and what you're stuck on." },
-  { title: "Add your product", body: "Create its page on the showcase wall with your story and links." },
-  { title: "Share every launch", body: "Post launch links, updates and blogs as you ship. The community shows up." },
-  { title: "Help someone else", body: "Give feedback, answer a question, pass on a tool. That's the deal." },
+  { title: "Add the badge", body: "Put the ShipDaily badge on your site to unlock your starter credits." },
+  { title: "Try 3 products", body: "Open other founders' launches and react. Trying earns the credits you launch with." },
+  { title: "Launch in a Launch Week", body: "Grab a slot in an upcoming Launch Week and get real people trying your product." },
+  { title: "Ship and relaunch", body: "Post every update to your ship graph. Shipped enough? Relaunch and past testers hear about it." },
 ];
 
 export function HowItWorks() {

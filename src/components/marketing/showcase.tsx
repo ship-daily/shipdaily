@@ -5,8 +5,8 @@ import { APP_LIVE, APP_URL } from "@/lib/site";
 const PAGE_HAS = [
   "What it does, in your words",
   "Founder details and your story",
-  "Website and every launch link in one place",
-  "Product updates and blog posts over time",
+  "A ship graph of every update you post",
+  "Every launch and relaunch in one place",
 ];
 
 const LAUNCH_PLATFORMS = ["Product Hunt", "Hacker News", "Peerlist", "Reddit"];
@@ -18,13 +18,13 @@ export function Showcase() {
       <Globe aria-hidden className="chalk-rough absolute bottom-0 -left-20 hidden h-24 w-28 -rotate-6 text-chalk/50 xl:block" />
       <div className="grid items-center gap-14 lg:grid-cols-[1fr_1.1fr] lg:gap-20">
         <div>
-          <p className="chalk font-hand text-2xl text-mint">The product showcase</p>
+          <p className="chalk font-hand text-2xl text-mint">Your product page</p>
           <h2 className="chalk mt-2 font-display text-[2.4rem] leading-[1.05] font-semibold tracking-tight md:text-[3.4rem]">
             A home for what you&apos;re building.
           </h2>
           <p className="chalk-text mt-5 max-w-md text-xl leading-snug text-chalk/90">
-            A public wall of community products. Every product gets its own page that you keep up to date, so people can
-            follow along long after launch day.
+            Every product gets a page with a GitHub-style ship graph. Keep shipping, keep it green, and people follow along
+            long after Launch Week. Guidance and resources live in our Discord.
           </p>
 
           <ul className="mt-8 space-y-3">
@@ -49,7 +49,7 @@ export function Showcase() {
                 href={APP_URL}
                 className="inline-flex items-center gap-2 rounded-xl border border-chalk/25 px-5 py-3 font-semibold transition-colors hover:border-chalk/50 hover:bg-white/5"
               >
-                Browse the wall
+                See Launch Week
               </a>
             </div>
           ) : (
@@ -65,7 +65,7 @@ export function Showcase() {
                 aria-disabled="true"
                 className="inline-flex cursor-not-allowed items-center gap-2 rounded-xl border border-chalk/15 px-5 py-3 font-semibold text-chalk/50"
               >
-                Browse the wall
+                See Launch Week
               </span>
               <span className="chalk ml-1 -rotate-3 font-hand text-2xl text-mint">Coming soon!</span>
             </div>
@@ -131,7 +131,7 @@ export function Showcase() {
           {/* Chalk annotations */}
           <div aria-hidden className="pointer-events-none absolute -bottom-20 right-2 hidden items-start gap-1 lg:flex">
             <SwoopArrow className="chalk-rough h-14 w-12 -scale-x-100 -rotate-[150deg] text-chalk/80" />
-            <p className="chalk mt-6 -rotate-3 font-hand text-[22px] leading-tight text-chalk/90">every launch, one page</p>
+            <p className="chalk mt-6 -rotate-3 font-hand text-[22px] leading-tight text-chalk/90">every ship, one graph</p>
           </div>
           <Sparkle aria-hidden className="chalk-rough absolute -top-6 -left-6 hidden size-6 text-chalk/70 lg:block" />
         </div>
