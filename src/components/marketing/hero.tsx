@@ -87,7 +87,7 @@ export function Hero() {
             <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
           </a>
           <a
-            href="#showcase"
+            href="#how-it-works"
             className="inline-flex items-center gap-2 rounded-xl border border-chalk/25 px-6 py-3.5 font-semibold text-chalk transition-colors hover:border-chalk/50 hover:bg-white/5"
           >
             See how it works
