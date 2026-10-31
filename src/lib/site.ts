@@ -5,7 +5,7 @@ export const APP_LIVE = false;
 export const GITHUB_URL = "https://github.com/ship-daily";
 
 export const NAV_LINKS = [
-  { label: "Showcase", href: "#showcase" },
+  { label: "Product page", href: "#showcase" },
   { label: "Community", href: "#community" },
   { label: "How it works", href: "#how-it-works" },
 ];

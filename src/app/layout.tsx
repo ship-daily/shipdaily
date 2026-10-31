@@ -22,7 +22,7 @@ const patrickHand = Patrick_Hand({
 
 const TITLE = "ShipDaily — Ship daily, together.";
 const DESCRIPTION =
-  "A community where early-stage founders, indie hackers and SaaS builders back each other: launch promotion, honest feedback, guidance and shared resources.";
+  "An open-source launchpad where products grow in public: launch in weekly Launch Weeks, get real people trying your product, and show every update on a GitHub-style ship graph.";
 
 export const metadata: Metadata = {
   title: TITLE,
